@@ -1,0 +1,37 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Better</title>
+    <link href="~/Client/build/styles/site.css" rel="stylesheet" />
+    <script src="~/Client/build/js/application.js"></script>
+</head>
+<body>
+
+    <div data-am-header>
+        <h1>Better</h1>
+    </div>
+
+    <div data-am-container="body">
+
+        <div data-am-section="toolbar">
+            Toolbar
+        </div>
+        <div data-am-section="dashboard">
+            Dashboard
+        </div>
+        <div data-am-section="recent">
+            Recent
+        </div>
+        
+    </div>
+    <div data-am-statusbar></div>
+
+    @RenderBody()
+</body>
+</html>
