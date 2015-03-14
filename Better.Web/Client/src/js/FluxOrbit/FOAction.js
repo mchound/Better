@@ -1,9 +1,8 @@
 var FOAction = function(options){
 	
-	// Private properties	
-	var _name = options.name;
+	// Private properties
 	var _id = 0;
-	var _callbacks = {};
+	var _callbacks = [];
 	var _async = options.async;
 
 	// Private methods
@@ -24,13 +23,18 @@ var FOAction = function(options){
 	};
 
 	var _invokeListeners = function(payload){
-		for(var cb in _callbacks){
-			_callbacks[cb](payload);
+		for(var i = 0; i < _callbacks.length; i++){
+			_callbacks[i].call(_callbacks[i], payload);
 		}
 	};
 
+	// Public properties
+	this.name = options.name;
+
+	// Public methods
+
 	this.listen = function(callback){
-		_callbacks[_id++] = callback
+		_callbacks.push(callback)
 	};
 
 	this.trigger = function(payload){

@@ -1,18 +1,18 @@
 ﻿var React = require('react');
-var FluxOrbit = require('../FluxOrbit/FluxOrbit');
+var DashboardStore = require('../Stores/DashboardStore');
 
 module.exports = React.createClass({
 	
 	getInitialState: function(){
 		return {
 			selected: null,
-			leagues: FluxOrbit.stores.dashboardStore.getLeagues()
+			leagues: DashboardStore.getLeagues()
 		}
 	},
 
 	componentDidMount: function(){
-		FluxOrbit.stores.dashboardStore.addChangeListener('countryChange', function(){
-			this.setState({leagues: FluxOrbit.stores.dashboardStore.getLeagues()});
+		DashboardStore.addChangeListener('countryChange', function(){
+			this.setState({leagues: DashboardStore.getLeagues()});
 		}.bind(this));
 	},
 
@@ -36,7 +36,7 @@ module.exports = React.createClass({
 
 	_options: function(){
 		return this.state.leagues.map(function(league){
-			return (<option value={league.value}>{league.text}</option>);
+			return (<option value={league.value} key={league.value}>{league.text}</option>);
 		});
 	},
 

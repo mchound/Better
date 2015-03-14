@@ -1,12 +1,13 @@
 ﻿var React = require('react');
-var FluxOrbit = require('../FluxOrbit/FluxOrbit');
+var DashboardStore = require('../Stores/DashboardStore');
+var Actions = require('../Actions/Actions');
 
 module.exports = React.createClass({
 	
 	getInitialState: function(){
 		return {
 			selected: null,
-			countries: FluxOrbit.stores.dashboardStore.getCountries()
+			countries: DashboardStore.getCountries()
 		}
 	},
 
@@ -34,12 +35,12 @@ module.exports = React.createClass({
 
 	_options: function(){
 		return this.state.countries.map(function(country){
-			return (<option value={country.value}>{country.text}</option>);
+			return (<option value={country.value} key={country.value}>{country.text}</option>);
 		});
 	},
 
 	_onChange: function(e){
-		FluxOrbit.actions.countrySelect.trigger(this.refs.select.getDOMNode().value);
+		Actions.countrySelect.trigger(this.refs.select.getDOMNode().value);
 	}
 
 

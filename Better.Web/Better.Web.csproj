@@ -95,7 +95,7 @@
   <ItemGroup>
     <Content Include="Client\build\js\application.js" />
     <Content Include="Client\build\styles\site.css" />
-    <Content Include="Client\src\js\Actions\LeagueActions.js" />
+    <Content Include="Client\src\js\Actions\Actions.js" />
     <Content Include="Client\src\js\site.js" />
     <Content Include="Client\src\js\FluxOrbit\FluxOrbit.js" />
     <Content Include="Client\src\js\FluxOrbit\FOAction.js" />
@@ -108,6 +108,7 @@
     <Content Include="Client\src\js\Components\Sections\Dashboard.react.jsx" />
     <Content Include="Client\src\js\Components\CountrySelect.react.jsx" />
     <Content Include="Client\src\js\Components\LeagueSelect.react.jsx" />
+    <Content Include="Client\src\js\Components\Filters\TeamFilter.react.jsx" />
     <None Include="Client\src\styles\components\header.less" />
     <Content Include="Global.asax" />
     <Content Include="Gruntfile.js" />

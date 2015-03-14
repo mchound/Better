@@ -1,12 +1,13 @@
 ﻿var FluxOrbit = require('../FluxOrbit/FluxOrbit');
+var Actions = require('../Actions/Actions');
 
 var _availableLeagues = [];
 
-FluxOrbit.createStore({
+module.exports = FluxOrbit.createStore({
     
     name: 'dashboardStore',
 
-    actions: ['countrySelect'],
+    actions: [Actions.countrySelect],
 
     onCountrySelect: function(country){
         _availableLeagues = _leagues[country] || [];

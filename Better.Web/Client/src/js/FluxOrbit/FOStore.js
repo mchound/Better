@@ -12,6 +12,10 @@ var FOStore = function(options){
 		_callbacks.change.push(callback);
 	};
 
+	this.listenTo = function(action, callback){
+		action.listen(callback.bind(this));
+	};
+
 	this.addChangeListener = function(changeEvent, callback){
 		if(!_callbacks[changeEvent]) _callbacks[changeEvent] = [];
 		_callbacks[changeEvent].push(callback);
