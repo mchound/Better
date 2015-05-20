@@ -106,9 +106,8 @@
     <Content Include="Client\src\styles\components\container.less" />
     <Content Include="Client\src\styles\reset.less" />
     <Content Include="Client\src\js\Components\Sections\Dashboard.react.jsx" />
-    <Content Include="Client\src\js\Components\CountrySelect.react.jsx" />
-    <Content Include="Client\src\js\Components\LeagueSelect.react.jsx" />
     <Content Include="Client\src\js\Components\Filters\TeamFilter.react.jsx" />
+    <Content Include="Client\src\js\Components\Select.react.jsx" />
     <None Include="Client\src\styles\components\header.less" />
     <Content Include="Global.asax" />
     <Content Include="Gruntfile.js" />

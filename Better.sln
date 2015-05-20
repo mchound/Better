@@ -9,6 +9,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Better.Stats", "Better.Stat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Better.Web", "Better.Web\Better.Web.csproj", "{5F27A6A9-9DED-491C-8BFA-3A310C0B8A1F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Better.Data", "Better.Data\Better.Data.csproj", "{C630CC15-0B6A-4632-982B-49D70472F220}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SunnySide", "SunnySide\SunnySide.csproj", "{1FBD62B8-20B1-41C8-9792-70FEE30C2922}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{5F27A6A9-9DED-491C-8BFA-3A310C0B8A1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5F27A6A9-9DED-491C-8BFA-3A310C0B8A1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5F27A6A9-9DED-491C-8BFA-3A310C0B8A1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C630CC15-0B6A-4632-982B-49D70472F220}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C630CC15-0B6A-4632-982B-49D70472F220}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C630CC15-0B6A-4632-982B-49D70472F220}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C630CC15-0B6A-4632-982B-49D70472F220}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1FBD62B8-20B1-41C8-9792-70FEE30C2922}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1FBD62B8-20B1-41C8-9792-70FEE30C2922}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1FBD62B8-20B1-41C8-9792-70FEE30C2922}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1FBD62B8-20B1-41C8-9792-70FEE30C2922}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
