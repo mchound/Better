@@ -49,40 +49,84 @@ namespace Better.Run
                 new SeasonKey("England", 1993, 1)
             });
 
-            MatchFilter matchFilter = new MatchFilter();
-            
-            matchFilter.Team1.Side = MatchSide.Home;
-            matchFilter.Team1.MatchesFilter = new MatchesFilter { Min = 34, Max = 36 };
-            matchFilter.Team1.PositionFilter = new PositionFilter { Min = 5, Max = 8 };
-            matchFilter.Team1.PointsFilter = new PointsFilter { Min = 60, Max = 64 };
-
-            matchFilter.Team2.MatchesFilter = new MatchesFilter { Min = 34, Max = 36 };
-            matchFilter.Team2.PositionFilter = new PositionFilter { Min = 10, Max = 14 };
-            matchFilter.Team2.PointsFilter = new PointsFilter { Min = 38, Max = 46 };
-
-
-            var filtered = matches.Filter(matchFilter).ToList();
             
 
-            //var matches = service.Get(new SeasonKey[] {
-            //    new SeasonKey("England", 2000, 1),
-            //    new SeasonKey("England", 2001, 1),
-            //    new SeasonKey("England", 2002, 1),
-            //    new SeasonKey("England", 2003, 1),
-            //    new SeasonKey("England", 2004, 1),
-            //    new SeasonKey("England", 2005, 1),
-            //    new SeasonKey("England", 2006, 1),
-            //    new SeasonKey("England", 2007, 1),
-            //    new SeasonKey("England", 2008, 1),
-            //    new SeasonKey("England", 2009, 1),
-            //    new SeasonKey("England", 2010, 1),
-            //    new SeasonKey("England", 2012, 1),
-            //    new SeasonKey("England", 2013, 1),
-            //    new SeasonKey("England", 2014, 1)
-            //});
-            
-            
         }
+
+        public class Diff
+        {
+            public int Home { get; set; }
+            public int Away { get; set; }
+            public int Draw { get; set; }
+            public float HomeProb { get; set; }
+            public float AwayProb { get; set; }
+            public float DrawProb { get; set; }
+        }
+
+        //static void Main(string[] args)
+        //{
+        //    Better.Data.BetterContext db = new BetterContext();
+        //    MatchService service = new MatchService(db, new DefaultCacheService());
+
+        //    var matches = service.Get(new SeasonKey[] { 
+        //        new SeasonKey("England", 2014, 1),
+        //        new SeasonKey("England", 2013, 1),
+        //        new SeasonKey("England", 2012, 1),
+        //        new SeasonKey("England", 2011, 1),
+        //        new SeasonKey("England", 2010, 1),
+        //        new SeasonKey("England", 2009, 1),
+        //        new SeasonKey("England", 2008, 1),
+        //        new SeasonKey("England", 2007, 1),
+        //        new SeasonKey("England", 2006, 1),
+        //        new SeasonKey("England", 2005, 1),
+        //        new SeasonKey("England", 2004, 1),
+        //        new SeasonKey("England", 2003, 1),
+        //        new SeasonKey("England", 2002, 1),
+        //        new SeasonKey("England", 2001, 1),
+        //        new SeasonKey("England", 2000, 1),
+        //        new SeasonKey("England", 1999, 1),
+        //        new SeasonKey("England", 1998, 1),
+        //        new SeasonKey("England", 1997, 1),
+        //        new SeasonKey("England", 1996, 1),
+        //        new SeasonKey("England", 1995, 1),
+        //        new SeasonKey("England", 1994, 1),
+        //        new SeasonKey("England", 1993, 1)
+        //    });
+
+        //    MatchFilter matchFilter = new MatchFilter();
+            
+        //    matchFilter.Team1.Side = MatchSide.Home;
+        //    matchFilter.Team1.MatchesFilter = new MatchesFilter { Min = 34, Max = 36 };
+        //    matchFilter.Team1.PositionFilter = new PositionFilter { Min = 5, Max = 8 };
+        //    matchFilter.Team1.PointsFilter = new PointsFilter { Min = 60, Max = 64 };
+
+        //    matchFilter.Team2.MatchesFilter = new MatchesFilter { Min = 34, Max = 36 };
+        //    matchFilter.Team2.PositionFilter = new PositionFilter { Min = 10, Max = 14 };
+        //    matchFilter.Team2.PointsFilter = new PointsFilter { Min = 38, Max = 46 };
+
+
+        //    var filtered = matches.Filter(matchFilter).ToList();
+            
+
+        //    //var matches = service.Get(new SeasonKey[] {
+        //    //    new SeasonKey("England", 2000, 1),
+        //    //    new SeasonKey("England", 2001, 1),
+        //    //    new SeasonKey("England", 2002, 1),
+        //    //    new SeasonKey("England", 2003, 1),
+        //    //    new SeasonKey("England", 2004, 1),
+        //    //    new SeasonKey("England", 2005, 1),
+        //    //    new SeasonKey("England", 2006, 1),
+        //    //    new SeasonKey("England", 2007, 1),
+        //    //    new SeasonKey("England", 2008, 1),
+        //    //    new SeasonKey("England", 2009, 1),
+        //    //    new SeasonKey("England", 2010, 1),
+        //    //    new SeasonKey("England", 2012, 1),
+        //    //    new SeasonKey("England", 2013, 1),
+        //    //    new SeasonKey("England", 2014, 1)
+        //    //});
+            
+            
+        //}
 
         //static void Main(string[] args)
         //{

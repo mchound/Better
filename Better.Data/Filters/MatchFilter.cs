@@ -9,26 +9,140 @@ namespace Better.Data.Filters
 {
     public static class MatchFilterExtensions
     {
-        public static IEnumerable<MatchData> Filter(this IEnumerable<MatchData> matches, MatchFilter filter)
-        {
-            return filter.FilterMatches(matches);
-        }
-
-        //public static IEnumerable<MatchData> Filter(this IEnumerable<MatchData> matches, TeamFilter filter)
-        //{
-        //    return filter.Filter(matches);
-        //}
-
         public static bool Test(this MatchData match, IFilter filter, MatchSide side)
         {
             if (filter == null) return true;
             return filter.Test(match, side);
         }
+
+        public static IEnumerable<MatchFilterResult> GetFilterResult(this IEnumerable<MatchData> matches, TeamFilter team1, TeamFilter team2)
+        {
+            foreach (var match in matches)
+            {
+                MatchFilterResult result = match.GetFilterResult(team1, team2);
+                if (result != null) yield return result;
+            }
+        }
+
+        public static MatchFilterResult GetFilterResult(this MatchData match, TeamFilter teamFilter1, TeamFilter teamFilter2)
+        {
+            switch (teamFilter1.Side)
+            {
+                case MatchSide.NotSet:
+                    if(match.HtGoals == match.AtGoals)
+                    {
+                        return new MatchFilterResult
+                        {
+                            Draw = true,
+                            Team1Goals = match.HtGoals,
+                            Team2Goals = match.HtGoals,
+                            HtGoals = match.HtGoals,
+                            AtGoals = match.HtGoals
+                        };
+                    }
+                    bool team1Home = teamFilter1.Test(match, MatchSide.Home);
+                    bool team1Away = teamFilter1.Test(match, MatchSide.Away);
+                    bool team2Home = teamFilter2.Test(match, MatchSide.Home);
+                    bool team2Away = teamFilter2.Test(match, MatchSide.Away);
+                    
+                    if(team1Home && team1Away && team2Home && team2Away)
+                    {
+                        return new MatchFilterResult
+                        {
+                            Team1Win = match.HtGoals != match.AtGoals,
+                            Team2Win = match.HtGoals != match.AtGoals,
+                            Draw = match.HtGoals == match.AtGoals,
+                            Team1Goals = (double)(match.HtGoals + match.AtGoals) / 2.0,
+                            Team2Goals = (double)(match.HtGoals + match.AtGoals) / 2.0,
+                            HtGoals = match.HtGoals,
+                            AtGoals = match.AtGoals,
+                            HtWin = match.HtGoals > match.AtGoals,
+                            AtWin = match.HtGoals < match.AtGoals
+                        };
+                    }
+                    else if ((team1Home && !team1Away && team2Away) || (!team2Home && team2Away && team1Home))
+                    {
+                        return new MatchFilterResult
+                        {
+                            Team1Win = match.HtGoals > match.AtGoals,
+                            Team2Win = match.AtGoals > match.HtGoals,
+                            Draw = match.HtGoals == match.AtGoals,
+                            Team1Goals = match.HtGoals,
+                            Team2Goals = match.AtGoals,
+                            HtGoals = match.HtGoals,
+                            AtGoals = match.AtGoals,
+                            HtWin = match.HtGoals > match.AtGoals,
+                            AtWin = match.HtGoals < match.AtGoals
+                        };
+                    }
+                    else if((!team1Home && team1Away && team2Home) || (team2Home && !team2Away && team1Away))
+                    {
+                        return new MatchFilterResult
+                        {
+                            Team1Win = match.HtGoals < match.AtGoals,
+                            Team2Win = match.AtGoals < match.HtGoals,
+                            Draw = match.HtGoals == match.AtGoals,
+                            Team1Goals = match.AtGoals,
+                            Team2Goals = match.HtGoals,
+                            HtGoals = match.HtGoals,
+                            AtGoals = match.AtGoals,
+                            HtWin = match.HtGoals > match.AtGoals,
+                            AtWin = match.HtGoals < match.AtGoals
+                        };
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                case MatchSide.Home:
+                    return new MatchFilterResult
+                    {
+                        Team1Win = match.HtGoals > match.AtGoals,
+                        Team2Win = match.AtGoals > match.HtGoals,
+                        Draw = match.HtGoals == match.AtGoals,
+                        Team1Goals = match.HtGoals,
+                        Team2Goals = match.AtGoals,
+                        HtGoals = match.HtGoals,
+                        AtGoals = match.AtGoals,
+                        HtWin = match.HtGoals > match.AtGoals,
+                        AtWin = match.HtGoals < match.AtGoals
+                    };
+                case MatchSide.Away:
+                    return new MatchFilterResult
+                    {
+                        Team1Win = match.HtGoals < match.AtGoals,
+                        Team2Win = match.AtGoals < match.HtGoals,
+                        Draw = match.HtGoals == match.AtGoals,
+                        Team1Goals = match.AtGoals,
+                        Team2Goals = match.HtGoals,
+                        HtGoals = match.HtGoals,
+                        AtGoals = match.AtGoals,
+                        HtWin = match.HtGoals > match.AtGoals,
+                        AtWin = match.HtGoals < match.AtGoals
+                    };
+                default:
+                    return null;
+            }
+        } 
+    }
+
+    public class MatchFilterResult
+    {
+        public bool Team1Win { get; set; }
+        public bool Team2Win { get; set; }
+        public bool HtWin { get; set; }
+        public bool AtWin { get; set; }
+        public bool Draw { get; set; }
+        public double Team1Goals { get; set; }
+        public double Team2Goals { get; set; }
+        public int HtGoals { get; set; }
+        public int AtGoals { get; set; }
     }
 
     public interface IFilter
     {
         bool Test(MatchData match, MatchSide side);
+        bool Test(MatchData match);
     }
 
     public class TeamNameFilter : IFilter
@@ -42,6 +156,12 @@ namespace Better.Data.Filters
             string teamName = side == MatchSide.Home ? match.HomeTeam : match.AwayTeam;
             return teamName == this.TeamName;
         }
+
+        public bool Test(MatchData match)
+        {
+            if (string.IsNullOrWhiteSpace(this.TeamName)) return true;
+            return match.HomeTeam == this.TeamName || match.AwayTeam == this.TeamName;
+        }
     }
 
     public abstract class SpanFilter : IFilter
@@ -49,9 +169,14 @@ namespace Better.Data.Filters
         public int Min { get; set; }
         public int Max { get; set; }
 
-        public bool Test(int testValue)
+        public bool WithinSpan(int testValue)
         {
             return testValue >= this.Min && testValue <= this.Max; 
+        }
+
+        public bool Test(MatchData match)
+        {
+            return this.Test(match, MatchSide.Home) || this.Test(match, MatchSide.Away);
         }
 
         public abstract bool Test(MatchData match, MatchSide side);
@@ -61,7 +186,7 @@ namespace Better.Data.Filters
     {
         public override bool Test(MatchData match, MatchSide side)
         {
-            return this.Test(side == MatchSide.Home ? match.HtTableRow.Matches : match.AtTableRow.Matches);
+            return this.WithinSpan(side == MatchSide.Home ? match.HtTableRow.Matches : match.AtTableRow.Matches);
         }
     }
 
@@ -69,7 +194,7 @@ namespace Better.Data.Filters
     {
         public override bool Test(MatchData match, MatchSide side)
         {
-            return this.Test(side == MatchSide.Home ? match.HtTableRow.GoalsMade : match.AtTableRow.GoalsMade);
+            return this.WithinSpan(side == MatchSide.Home ? match.HtTableRow.GoalsMade : match.AtTableRow.GoalsMade);
         }
     }
 
@@ -77,7 +202,7 @@ namespace Better.Data.Filters
     {
         public override bool Test(MatchData match, MatchSide side)
         {
-            return this.Test(side == MatchSide.Home ? match.HtTableRow.GoalsConceded : match.AtTableRow.GoalsConceded);
+            return this.WithinSpan(side == MatchSide.Home ? match.HtTableRow.GoalsConceded : match.AtTableRow.GoalsConceded);
         }
     }
 
@@ -85,7 +210,7 @@ namespace Better.Data.Filters
     {
         public override bool Test(MatchData match, MatchSide side)
         {
-            return this.Test(side == MatchSide.Home ? match.HtTableRow.GoalsDiff : match.AtTableRow.GoalsDiff);
+            return this.WithinSpan(side == MatchSide.Home ? match.HtTableRow.GoalsDiff : match.AtTableRow.GoalsDiff);
         }
     }
 
@@ -93,7 +218,7 @@ namespace Better.Data.Filters
     {
         public override bool Test(MatchData match, MatchSide side)
         {
-            return this.Test(side == MatchSide.Home ? match.HtTableRow.Wins : match.AtTableRow.Wins);
+            return this.WithinSpan(side == MatchSide.Home ? match.HtTableRow.Wins : match.AtTableRow.Wins);
         }
     }
 
@@ -101,7 +226,7 @@ namespace Better.Data.Filters
     {
         public override bool Test(MatchData match, MatchSide side)
         {
-            return this.Test(side == MatchSide.Home ? match.HtTableRow.Draws : match.AtTableRow.Draws);
+            return this.WithinSpan(side == MatchSide.Home ? match.HtTableRow.Draws : match.AtTableRow.Draws);
         }
     }
 
@@ -109,7 +234,7 @@ namespace Better.Data.Filters
     {
         public override bool Test(MatchData match, MatchSide side)
         {
-            return this.Test(side == MatchSide.Home ? match.HtTableRow.Losses : match.AtTableRow.Losses);
+            return this.WithinSpan(side == MatchSide.Home ? match.HtTableRow.Losses : match.AtTableRow.Losses);
         }
     }
 
@@ -117,7 +242,7 @@ namespace Better.Data.Filters
     {
         public override bool Test(MatchData match, MatchSide side)
         {
-            return this.Test(side == MatchSide.Home ? match.HtTableRow.Points : match.AtTableRow.Points);
+            return this.WithinSpan(side == MatchSide.Home ? match.HtTableRow.Points : match.AtTableRow.Points);
         }
     }
 
@@ -125,15 +250,12 @@ namespace Better.Data.Filters
     {
         public override bool Test(MatchData match, MatchSide side)
         {
-            return this.Test(side == MatchSide.Home ? match.HtTableRow.Position : match.AtTableRow.Position);
+            return this.WithinSpan(side == MatchSide.Home ? match.HtTableRow.Position : match.AtTableRow.Position);
         }
     }
 
     public class MatchFilter
     {
-        public string Country { get; set; }
-        public IEnumerable<int> Seasons { get; set; }
-        public IEnumerable<int> Levels { get; set; }
         public TeamFilter Team1 { get; set; }
         public TeamFilter Team2 { get; set; }
 
@@ -154,7 +276,7 @@ namespace Better.Data.Filters
                 case MatchSide.Away:
                     return matches.Where(m => (this.Team1.Test(m, MatchSide.Away) && this.Team2.Test(m, MatchSide.Home)));
                 default:
-                    return matches;
+                    return Enumerable.Empty<MatchData>();
             }
         }
     }

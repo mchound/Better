@@ -4,11 +4,11 @@
 
         watch: {
             browserify: {
-                files: ['Client/src/js/**/*.js', 'Client/src/js/**/*.jsx'],
+                files: ['client/src/js/**/*.js', 'client/src/js/**/*.jsx'],
                 tasks: ['browserify:dev']
             },
             less: {
-                files: 'Client/src/styles/**/*.less',
+                files: 'client/src/styles/**/*.less',
                 tasks: ['less:dev']
             }
         },
@@ -20,25 +20,39 @@
                         debug: true
                     },
                     watch: true,
-                    keepAlive: true,
+                    keepAlive: false,
                     watchifyOptions: {
                         fullPaths: true
                     },
                     transform: [require('grunt-react').browserify]
                 },
-                src: ['Client/src/js/**/*.js', 'Client/src/js/**/*.jsx'],
-                dest: 'Client/build/js/application.js'
+                src: ['client/src/js/**/*.js'],
+                dest: 'client/build/application.js'
+            },
+            build: {
+                options: {
+                    browserifyOptions: {
+                        debug: false
+                    },
+                    watch: false,
+                    keepAlive: false,
+                    watchifyOptions: {
+                        fullPaths: false
+                    },
+                    transform: [require('grunt-react').browserify]
+                },
+                src: ['client/src/js/**/*.js'],
+                dest: 'client/build/application.js'
             }
         },
-
         uglify: {
-            dev: {
+            client: {
                 options: {
                     sourceMap: true,
-                    sourceMapName: 'Client/build/js/application.min.js.sourcemap'
+                    sourceMapName: 'client/build/application.min.js.sourcemap'
                 },
                 files: {
-                    'Client/build/js/application.min.js': ['Client/build/js/application.js']
+                    'client/build/application.min.js': ['client/build/application.js']
                 }
             }
         },
@@ -46,22 +60,22 @@
         less: {
             dev: {
                 options: {
-                    paths: ["Client/src/styles"],
+                    paths: ["styles"],
                     sourceMap: true,
-                    sourceMapFilename: "Client/build/styles/site.css.map",
-                    sourceMapBasepath: "Client/build/styles"
+                    sourceMapFilename: "client/build/site.css.map",
+                    sourceMapBasepath: "client/build"
                 },
                 files: {
-                    "Client/build/styles/site.css": "Client/src/styles/site.less"
+                    "client/build/site.css": "client/src/styles/import.less"
                 }
             },
             build: {
                 options: {
-                    paths: ["Client/build/styles"],
+                    paths: ["styles"],
                     compress: true
                 },
                 files: {
-                    "Client/build/styles/site.min.css": "CLient/src/styles/site.less"
+                    "client/build/site.min.css": "client/src/styles/import.less"
                 }
             }
         }
@@ -74,4 +88,5 @@
 
     grunt.registerTask('default', ['browserify', 'less:dev']);
     grunt.registerTask('auto', ['browserify', 'less:dev', 'watch']);
+    grunt.registerTask('build', ['browserify:build', 'uglify', 'less:build']);
 };

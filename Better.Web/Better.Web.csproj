@@ -38,7 +38,19 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -79,9 +91,6 @@
     <Reference Include="System.Web.Mvc">
       <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.2\lib\net45\System.Web.Mvc.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http.Formatting">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
@@ -93,33 +102,66 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Client\build\js\application.js" />
-    <Content Include="Client\build\styles\site.css" />
-    <Content Include="Client\src\js\Actions\Actions.js" />
-    <Content Include="Client\src\js\site.js" />
-    <Content Include="Client\src\js\FluxOrbit\FluxOrbit.js" />
-    <Content Include="Client\src\js\FluxOrbit\FOAction.js" />
-    <Content Include="Client\src\js\FluxOrbit\FOStore.js" />
-    <Content Include="Client\src\js\Stores\DashboardStore.js" />
-    <Content Include="Client\src\styles\components\dashboard.less" />
-    <Content Include="Client\src\styles\components\section.less" />
-    <Content Include="Client\src\styles\components\container.less" />
-    <Content Include="Client\src\styles\reset.less" />
-    <Content Include="Client\src\js\Components\Sections\Dashboard.react.jsx" />
-    <Content Include="Client\src\js\Components\Filters\TeamFilter.react.jsx" />
-    <Content Include="Client\src\js\Components\Select.react.jsx" />
-    <None Include="Client\src\styles\components\header.less" />
+    <Content Include="client\build\application.js" />
+    <Content Include="client\build\site.css" />
+    <Content Include="client\src\js\Actions\Actions.js" />
+    <Content Include="client\src\js\application.js" />
+    <Content Include="client\src\js\Components\Admin\AdminMatch.react.js" />
+    <Content Include="client\src\js\Components\Admin\AdminMatches.react.js" />
+    <Content Include="client\src\js\Components\Admin\RemoteAdd.react.js" />
+    <Content Include="client\src\js\Components\Common\FancyRadio.react.js" />
+    <Content Include="client\src\js\Components\Common\If.react.js" />
+    <Content Include="client\src\js\Components\Common\NumberSpan.react.js" />
+    <Content Include="client\src\js\Components\Filters\Points\Points.react.js" />
+    <Content Include="client\src\js\Components\Filters\FilterList.react.js" />
+    <Content Include="client\src\js\Components\Filters\FilterSelector.react.js" />
+    <Content Include="client\src\js\Components\Filters\Draws\Draws.react.js" />
+    <Content Include="client\src\js\Components\Filters\Losses\Losses.react.js" />
+    <Content Include="client\src\js\Components\Filters\Wins\Wins.react.js" />
+    <Content Include="client\src\js\Components\Filters\GoalsDiff\GoalsDiff.react.js" />
+    <Content Include="client\src\js\Components\Filters\GoalsConceded\GoalsConceded.react.js" />
+    <Content Include="client\src\js\Components\Filters\GoalsMade\GoalsMade.react.js" />
+    <Content Include="client\src\js\Components\Filters\MatchSide\MatchSide.react.js" />
+    <Content Include="client\src\js\Components\Filters\Matches\Matches.react.js" />
+    <Content Include="client\src\js\Components\Filters\Position\Position.react.js" />
+    <Content Include="client\src\js\Components\Filters\TeamSelector\TeamSelector.react.js" />
+    <Content Include="client\src\js\Components\MatchCounter\MatchCounter.react.js" />
+    <Content Include="client\src\js\Components\Season\Season.react.js" />
+    <Content Include="client\src\js\Components\Statistics\Result.react.js" />
+    <Content Include="client\src\js\Constants\Constants.js" />
+    <Content Include="client\src\js\Data\Seasons.js" />
+    <Content Include="client\src\js\Mixins\Flux.mixin.js" />
+    <Content Include="client\src\js\Mixins\SpanFilter.mixin.js" />
+    <Content Include="client\src\js\Stores\FilterStore.js" />
+    <Content Include="client\src\js\Stores\AdminStore.js" />
+    <Content Include="client\src\js\Stores\StatisticsStore.js" />
+    <Content Include="client\src\js\Stores\PrerequisiteStore.js" />
+    <Content Include="client\src\js\Stores\SeasonStore.js" />
+    <Content Include="client\src\js\Utilities\Ajax.js" />
+    <Content Include="client\src\js\Utilities\Collection.js" />
+    <Content Include="client\src\js\Utilities\HtmlSelectHelper.js" />
+    <Content Include="client\src\js\Utilities\MatchFilter.js" />
+    <Content Include="client\src\js\Utilities\SeasonKey.js" />
+    <Content Include="client\src\js\Utilities\String.js" />
     <Content Include="Global.asax" />
     <Content Include="Gruntfile.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\DataController.cs" />
+    <Compile Include="Api\AdminController.cs" />
+    <Compile Include="Api\StatsController.cs" />
+    <Compile Include="Api\PrerequisiteController.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\ModelBinders\JsonSerializedModelBinder.cs" />
+    <Compile Include="Models\ModelBinders\SeasonKeyModelBinder.cs" />
+    <Compile Include="Models\Models.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -128,14 +170,11 @@
     <Content Include="Views\_viewstart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="_package.json" />
-    <Content Include="Client\src\styles\site.less" />
-    <Content Include="Client\build\styles\site.css.map" />
-    <Content Include="Client\src\styles\settings.less" />
-    <Content Include="Client\src\styles\utilities.less" />
-    <Content Include="Client\src\styles\common.less" />
-    <Content Include="Client\src\styles\components\statusbar.less" />
     <Content Include="package.json" />
+    <Content Include="client\src\styles\import.less" />
+    <Content Include="client\build\site.css.map" />
+    <Content Include="client\src\styles\components\NumberSpan\NumberSpan.less" />
+    <Content Include="Views\Admin\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -145,7 +184,21 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
+    <Folder Include="client\src\styles\components\AdminMatches\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Better.Configuration\Better.Configuration.csproj">
+      <Project>{280cefb7-886b-401f-9b77-15acc96a95f3}</Project>
+      <Name>Better.Configuration</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Better.Data\Better.Data.csproj">
+      <Project>{c630cc15-0b6a-4632-982b-49d70472f220}</Project>
+      <Name>Better.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Better.Remote\Better.Remote.csproj">
+      <Project>{cb78301a-250d-4411-b529-39a18c508295}</Project>
+      <Name>Better.Remote</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

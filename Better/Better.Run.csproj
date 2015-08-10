@@ -70,10 +70,6 @@
       <Project>{0d214da8-e109-47ac-a906-8f7b62c08226}</Project>
       <Name>Better.Stats</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SunnySide\SunnySide.csproj">
-      <Project>{1fbd62b8-20b1-41c8-9792-70fee30c2922}</Project>
-      <Name>SunnySide</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
